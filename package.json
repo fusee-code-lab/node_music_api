@@ -1,0 +1,21 @@
+{
+  "name": "node_music_api",
+  "productName": "node_music_api",
+  "version": "0.0.1",
+  "description": "node_music_api",
+  "author": {
+    "name": "youliso",
+    "email": "youliso@Hotmail.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.8"
+  },
+  "dependencies": {
+    "node-abort-controller": "^2.0.0",
+    "node-fetch": "^2.6.1"
+  }
+}
