@@ -1,4 +1,5 @@
 {
+  "name": "node_music_api",
   "version": "0.0.0",
   "description": "🎵 A Node.js library to access Netease & QQ music by web api.",
   "keywords": [],
@@ -21,9 +22,9 @@
     "version:pre": "standard-version --prerelease",
     "version:alpha": "standard-version --prerelease alpha"
   },
-  "main": "dist/main.js",
-  "module": "dist/module.js",
-  "typings": "dist/types/src/index.d.ts",
+  "main": "dist/main/index.js",
+  "module": "dist/module/index.js",
+  "typings": "dist/main/types/src/index.d.ts",
   "dependencies": {
     "node-abort-controller": "^2.0.0",
     "node-fetch": "^2.6.1"

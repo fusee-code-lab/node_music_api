@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "rootDir": ".",
     "moduleResolution": "node",
     "inlineSourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
@@ -15,26 +14,14 @@
     "listEmittedFiles": false,
     "listFiles": false,
     "pretty": true,
-    "lib": [
-      "es2020"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "lib": ["es2020"],
+    "typeRoots": ["node_modules/@types"],
     "target": "es2020",
     "module": "esNext",
-    "outDir": "./dist",
-    "declaration": true,
-    "declarationDir": "./types",
-    "types": [
-      "node"
-    ]
+    "types": ["node"],
+    "declaration": true
   },
-  "include": [
-    "./src/**/*"
-, "qq"  ],
-  "exclude": [
-    "node_modules/**"
-  ],
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules/**"],
   "compileOnSave": false
 }

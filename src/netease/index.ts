@@ -1,6 +1,7 @@
 import { lyric_decode, noSongsDetailMsg, pagination } from '../util';
 import { base, getMusicInfo, getMusicInfo2 } from './base';
 
+// @ts-ignore
 export async function searchSong({ keyword = '', limit = 30, offset = 0, type = 1 }) {
   // *(type)* 搜索单曲(1)，歌手(100)，专辑(10)，歌单(1000)，用户(1002)
   const params = {

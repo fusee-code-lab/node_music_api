@@ -4,25 +4,35 @@ import sourcemap from "rollup-plugin-sourcemaps";
 import json from "@rollup/plugin-json";
 import typescript from "@rollup/plugin-typescript";
 
-/** @type {import('rollup').RollupOptions} */
-const config = {
-  input: "./src/index.ts",
-  output: [
-    {
-      file: "./dist/main.js",
-      exports: "auto",
-      format: "commonjs",
-      sourcemap: true,
-    },
-    { file: "./dist/module.js", format: "esm", sourcemap: true },
-  ],
-  plugins: [
-    json(),
-    typescript({ tsconfig: "./tsconfig.json" }),
-    commonjs(),
-    resolve(),
-    sourcemap(),
-  ],
-};
+const plugins = (declarationDir) => [
+  json(),
+  typescript({ tsconfig: "./tsconfig.json", declarationDir }),
+  commonjs(),
+  resolve(),
+  sourcemap(),
+];
+
+/** @type {import('rollup').RollupOptions[]} */
+const config = [
+  {
+    input: "./src/index.ts",
+    output: [
+      { dir: "./dist/module", format: "esm", sourcemap: true },
+    ],
+    plugins: plugins("./dist/module/types")
+  },
+  {
+    input: "./src/index.ts",
+    output: [
+      {
+        dir: "./dist/main",
+        exports: "auto",
+        format: "commonjs",
+        sourcemap: true,
+      },
+    ],
+    plugins: plugins("./dist/main/types")
+  },
+];
 
 export default config;
