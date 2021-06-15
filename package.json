@@ -1,21 +1,44 @@
 {
-  "name": "node_music_api",
-  "productName": "node_music_api",
-  "version": "0.0.1",
-  "description": "node_music_api",
-  "author": {
-    "name": "youliso",
-    "email": "youliso@Hotmail.com"
+  "version": "0.0.0",
+  "description": "🎵 A Node.js library to access Netease & QQ music by web api.",
+  "keywords": [],
+  "author": "fusee-code-lab",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fusee-code-lab"
   },
-  "license": "MIT",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
-    "dev": "node index.js"
+    "build": "rollup -c rollup.config.js",
+    "build:watch": "rollup -c rollup.config.js -w",
+    "fix:prettier": "prettier \"./src\" --write",
+    "test:prettier": "prettier \"./src\" --list-different",
+    "version:major": "standard-version -r major",
+    "version:minor": "standard-version -r minor",
+    "version:patch": "standard-version -r patch",
+    "version:pre": "standard-version --prerelease",
+    "version:alpha": "standard-version --prerelease alpha"
   },
-  "devDependencies": {
-    "@types/node-fetch": "^2.5.8"
-  },
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "typings": "dist/types/src/index.d.ts",
   "dependencies": {
     "node-abort-controller": "^2.0.0",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@types/node-fetch": "^2.5.8",
+    "prettier": "^2.3.1",
+    "rollup": "^2.51.2",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "standard-version": "^9.3.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.2"
   }
 }

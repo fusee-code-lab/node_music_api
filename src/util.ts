@@ -124,3 +124,8 @@ export function randomUserAgent() {
   ];
   return userAgentList[Math.floor(Math.random() * userAgentList.length + 1)];
 }
+
+// This is from lodash https://github.com/lodash/lodash/blob/master/isNull.js
+export function isNull(value: any): boolean {
+  return value === null;
+}

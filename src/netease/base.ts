@@ -1,7 +1,7 @@
 import fetch, { RequestInit } from 'node-fetch';
 import crypto from 'crypto';
 import querystring from 'querystring';
-import { isNull } from '@/lib';
+import { isNull } from '../util';
 import { completeCookie, randomUserAgent } from '../util';
 
 const iv = Buffer.from('0102030405060708');
