@@ -107,43 +107,43 @@ export async function getMid(id: number | string) {
 export async function getSongUrl(songid: string | number, br = 192) {
   const mid = await this.getMid(songid);
   const guid = `${Math.floor(Math.random() * 1000000000)}`;
-  const uin = '0';
+  const uin = "0";
   let data;
   try {
     const {
       req: {
-        data: { freeflowsip }
+        data: { freeflowsip },
       },
       req_0: {
-        data: { midurlinfo }
-      }
+        data: { midurlinfo },
+      },
     } = await base(
-      '/cgi-bin/musicu.fcg',
+      "/cgi-bin/musicu.fcg",
       {
         data: JSON.stringify({
           req: {
-            module: 'CDN.SrfCdnDispatchServer',
-            method: 'GetCdnDispatch',
+            module: "CDN.SrfCdnDispatchServer",
+            method: "GetCdnDispatch",
             param: {
               guid,
               calltype: 0,
-              userip: ''
-            }
+              userip: "",
+            },
           },
           req_0: {
-            module: 'vkey.GetVkeyServer',
-            method: 'CgiGetVkey',
+            module: "vkey.GetVkeyServer",
+            method: "CgiGetVkey",
             param: {
               guid,
               songmid: [mid],
               songtype: [0],
               uin,
               loginflag: 1,
-              platform: '20'
-            }
+              platform: "20",
+            },
           },
-          comm: { uin, format: 'json', ct: 24, cv: 0 }
-        })
+          comm: { uin, format: "json", ct: 24, cv: 0 },
+        }),
       },
       true
     );
