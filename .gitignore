@@ -1,4 +1,5 @@
 /package-lock.json
 /node_modules/
 /.idea/
-/yarn.lock
+.rollup.cache
+dist

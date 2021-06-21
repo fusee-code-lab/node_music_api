@@ -1,9 +1,9 @@
-import * as NeteaseApi from './netease';
-import * as QQApi from './qq';
+import * as NeteaseApi from "./netease";
+import * as QQApi from "./qq";
 
 export enum Vendors {
-  netease = 'netease',
-  qq = 'qq'
+  netease = "netease",
+  qq = "qq",
 }
 
 export interface BSongArrayOpt {
@@ -13,37 +13,51 @@ export interface BSongArrayOpt {
 
 export const provider = {
   netease: NeteaseApi,
-  qq: QQApi
+  qq: QQApi,
 };
 
 // 获取歌曲详情
 export async function getSongDetail(vendor: Vendors, id: number | string) {
-  return await provider[vendor]['getSongDetail'](id);
+  return await provider[vendor]["getSongDetail"](id);
 }
 
 // 批量获取歌曲详情
 export async function getBatchSongDetail(vendor: Vendors, ids: number[]) {
-  return await provider[vendor]['getBatchSongDetail'](ids);
+  return await provider[vendor]["getBatchSongDetail"](ids);
 }
 
 //获取歌曲url
-export async function getSongUrl(vendor: Vendors, id: number | string, br: number) {
-  return await provider[vendor]['getSongUrl'](id, br);
+export async function getSongUrl(
+  vendor: Vendors,
+  id: number | string,
+  br: number
+) {
+  return await provider[vendor]["getSongUrl"](id, br);
 }
 
 // 获取歌词
 export async function getLyric(vendor: Vendors, id: number | string) {
-  return await provider[vendor]['getLyric'](id);
+  return await provider[vendor]["getLyric"](id);
 }
 
 // 获取歌曲评论
-export async function getComment(vendor: Vendors, id: number | string, page = 1, limit = 20) {
-  return await provider[vendor]['getComment'](id, page, limit);
+export async function getComment(
+  vendor: Vendors,
+  id: number | string,
+  page = 1,
+  limit = 20
+) {
+  return await provider[vendor]["getComment"](id, page, limit);
 }
 
 // 获取歌手单曲
-export async function getArtistSongs(vendor: Vendors, id: number | string, offset = 0, limit = 50) {
-  return await provider[vendor]['getArtistSongs'](id, offset, limit);
+export async function getArtistSongs(
+  vendor: Vendors,
+  id: number | string,
+  offset = 0,
+  limit = 50
+) {
+  return await provider[vendor]["getArtistSongs"](id, offset, limit);
 }
 
 // 获取歌单歌曲
@@ -53,20 +67,23 @@ export async function getPlaylistDetail(
   offset = 0,
   limit = 65535
 ) {
-  return await provider[vendor]['getPlaylistDetail'](id, offset, limit);
+  return await provider[vendor]["getPlaylistDetail"](id, offset, limit);
 }
 
 // 获取专辑详情
 export async function getAlbumDetail(vendor: Vendors, id: number | string) {
-  return await provider[vendor]['getAlbumDetail'](id);
+  return await provider[vendor]["getAlbumDetail"](id);
 }
 
 // 批量获取任意vendor歌曲详情
-export async function getAnyVendorSongDetail(arr: BSongArrayOpt[], timeout = 0) {
+export async function getAnyVendorSongDetail(
+  arr: BSongArrayOpt[],
+  timeout = 0
+) {
   // 先分类
   let songsList: { [key: string]: any } = {
     netease: [],
-    qq: []
+    qq: [],
   };
   arr.forEach((item: any) => {
     songsList[item.vendor].push(item.id);
@@ -76,7 +93,7 @@ export async function getAnyVendorSongDetail(arr: BSongArrayOpt[], timeout = 0) 
   for (let vendor of Object.keys(songsList)) {
     const list = songsList[vendor];
     if (!list.length) continue;
-    let limit = vendor === 'qq' ? 50 : 1000;
+    let limit = vendor === "qq" ? 50 : 1000;
     let arr = [];
     for (let index = 0; index < list.length; index++) {
       arr.push(list[index]);

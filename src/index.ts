@@ -1,4 +1,4 @@
-import * as Api from './api';
+import * as Api from "./api";
 
 /**
  * 获取歌曲详情
@@ -35,7 +35,11 @@ export async function getBSongDetail(arr: Api.BSongArrayOpt[]) {
 /**
  * 获取歌曲播放链接
  */
-export async function getSongUrl(vendor: Api.Vendors, id: number | string, br: number = 192) {
+export async function getSongUrl(
+  vendor: Api.Vendors,
+  id: number | string,
+  br: number = 192
+) {
   try {
     let req = await Api.getSongUrl(vendor, id, br).catch(() => {
       return null;
@@ -70,11 +74,20 @@ export async function getLyric(vendor: Api.Vendors, id: number | string) {
  * @param limit 条数
  * @param offset 页码
  */
-export async function searchSong(keyword: string, offset: number = 0, limit: number = 5) {
+export async function searchSong(
+  keyword: string,
+  offset: number = 0,
+  limit: number = 5
+) {
   try {
     let gets = [
-      Api.provider.netease.searchSong({ keyword, limit, offset: offset * limit, type: 1 }),
-      Api.provider.qq.searchSong({ keyword, limit, offset })
+      Api.provider.netease.searchSong({
+        keyword,
+        limit,
+        offset: offset * limit,
+        type: 1,
+      }),
+      Api.provider.qq.searchSong({ keyword, limit, offset }),
     ];
     let req = await Promise.all(gets);
     let status = false;
@@ -96,8 +109,8 @@ export async function searchSong(keyword: string, offset: number = 0, limit: num
       data: {
         songs,
         neteaseTotal,
-        qqTotal
-      }
+        qqTotal,
+      },
     };
   } catch (e) {
     console.error(e.toString());
@@ -108,11 +121,25 @@ export async function searchSong(keyword: string, offset: number = 0, limit: num
 /**
  * 搜索歌单
  */
-export async function searchSheet(keyword: string, offset: number = 0, limit: number = 5) {
+export async function searchSheet(
+  keyword: string,
+  offset: number = 0,
+  limit: number = 5
+) {
   try {
     let gets = [
-      Api.provider.netease.searchSong({ keyword, limit, offset: offset * limit, type: 1000 }),
-      Api.provider.qq.searchSong({ keyword, limit, offset, remoteplace: 'txt.yqq.playlist' })
+      Api.provider.netease.searchSong({
+        keyword,
+        limit,
+        offset: offset * limit,
+        type: 1000,
+      }),
+      Api.provider.qq.searchSong({
+        keyword,
+        limit,
+        offset,
+        remoteplace: "txt.yqq.playlist",
+      }),
     ];
     let req = await Promise.all(gets);
     let status = false;
@@ -134,8 +161,8 @@ export async function searchSheet(keyword: string, offset: number = 0, limit: nu
       data: {
         sheets,
         neteaseTotal,
-        qqTotal
-      }
+        qqTotal,
+      },
     };
   } catch (e) {
     console.error(e.toString());
@@ -146,11 +173,20 @@ export async function searchSheet(keyword: string, offset: number = 0, limit: nu
 /**
  * 搜索专辑
  */
-export async function searchAlbum(keyword: string, offset: number = 0, limit: number = 5) {
+export async function searchAlbum(
+  keyword: string,
+  offset: number = 0,
+  limit: number = 5
+) {
   try {
     let gets = [
       Api.provider.netease.searchSong({ keyword, limit, offset, type: 10 }),
-      Api.provider.qq.searchSong({ keyword, limit, offset, remoteplace: 'txt.yqq.album' })
+      Api.provider.qq.searchSong({
+        keyword,
+        limit,
+        offset,
+        remoteplace: "txt.yqq.album",
+      }),
     ];
     let req = await Promise.all(gets);
     let status = false;
@@ -172,8 +208,8 @@ export async function searchAlbum(keyword: string, offset: number = 0, limit: nu
       data: {
         albums,
         neteaseTotal,
-        qqTotal
-      }
+        qqTotal,
+      },
     };
   } catch (e) {
     console.error(e.toString());
