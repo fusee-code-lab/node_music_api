@@ -35,7 +35,7 @@ const weapi = (object: object) => {
   // @ts-ignore
   const secretKey = crypto
     .randomBytes(16)
-    .map((n) => base62.charAt(n % 62).charCodeAt());
+    .map((n) => base62.charAt(n % 62).charCodeAt(0));
   return {
     params: aesEncrypt(
       Buffer.from(

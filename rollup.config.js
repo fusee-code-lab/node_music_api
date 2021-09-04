@@ -2,11 +2,11 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import sourcemap from "rollup-plugin-sourcemaps";
 import json from "@rollup/plugin-json";
-import typescript from "@rollup/plugin-typescript";
+import typescript from "rollup-plugin-typescript2";
 
-const plugins = (declarationDir) => [
+const plugins = () => [
   json(),
-  typescript({ tsconfig: "./tsconfig.json", declarationDir }),
+  typescript({ tsconfig: "./tsconfig.json" }),
   commonjs(),
   resolve(),
   sourcemap(),
@@ -19,7 +19,7 @@ const config = [
     output: [
       { dir: "./dist/module", format: "esm", sourcemap: true },
     ],
-    plugins: plugins("./dist/module/types")
+    plugins: plugins()
   },
   {
     input: "./src/index.ts",
@@ -31,7 +31,7 @@ const config = [
         sourcemap: true,
       },
     ],
-    plugins: plugins("./dist/main/types")
+    plugins: plugins()
   },
 ];
 

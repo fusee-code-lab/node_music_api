@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "rootDir": ".",
     "moduleResolution": "node",
     "inlineSourceMap": true,
