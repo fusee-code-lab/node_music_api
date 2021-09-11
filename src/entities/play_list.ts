@@ -7,11 +7,16 @@ export interface PlayListTag {
 export interface PlayList {
   readonly id: string;
   readonly name: string;
-  readonly createTime: Date;
-  readonly updateTime: Date;
   readonly coverImageUrl: string;
   readonly description: string;
-  readonly tags: Array<PlayListTag>;
   readonly creator: VendorUser;
   readonly songsCount: number;
+}
+
+export interface PlayListDetail {
+  readonly playList: PlayList;
+  readonly createTime: Date;
+  readonly updateTime: Date;
+  readonly tags: Array<PlayListTag>;
+  readonly trackIds: Array<string>;
 }

@@ -26,7 +26,7 @@ export interface ApiProtocol {
    * 根据搜索关键词搜索播放列表
    * @param pattern 搜索关键词
    */
-  searchPlayLists(pattern: string): SearchResult<string, PlayList>;
+  searchPlayLists(pattern: string): SearchResult<string, ListResponsePack<PlayList>>;
 
   /**
    * 根据给定关键词搜索歌词

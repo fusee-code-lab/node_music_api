@@ -46,8 +46,30 @@ export class NeteasyApi implements ApiProtocol {
     });
   }
 
-  searchPlayLists(pattern: string): SearchResult<string, PlayList> {
-    throw new Error('Method not implemented.');
+  searchPlayLists(pattern: string): SearchResult<string, ListResponsePack<PlayList>> {
+    return this.generalSearch(CloudSearchType.PLAY_LIST, pattern, (data) => {
+      const playlistsData = data['result']['playlists'];
+
+      if (Array.isArray(playlistsData)) {
+        return playlistsData
+          .map((e) => {
+            const creatorData = e['creator'];
+            return {
+              id: e['id'].toString(),
+              name: e['name'],
+              coverImageUrl: e['coverImgUrl'],
+              description: e['description'],
+              creator: {
+                id: creatorData['userId'].toString(),
+                nickname: creatorData['nickname']
+              },
+              songsCount: e['trackCount']
+            };
+          });
+      }
+
+      return undefined;
+    });
   }
 
   searchArtistes(pattern: string): SearchResult<String, Song> {
