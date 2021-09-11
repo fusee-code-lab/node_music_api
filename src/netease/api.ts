@@ -51,29 +51,40 @@ export class NeteasyApi implements ApiProtocol {
       const playlistsData = data['result']['playlists'];
 
       if (Array.isArray(playlistsData)) {
-        return playlistsData
-          .map((e) => {
-            const creatorData = e['creator'];
-            return {
-              id: e['id'].toString(),
-              name: e['name'],
-              coverImageUrl: e['coverImgUrl'],
-              description: e['description'],
-              creator: {
-                id: creatorData['userId'].toString(),
-                nickname: creatorData['nickname']
-              },
-              songsCount: e['trackCount']
-            };
-          });
+        return playlistsData.map((e) => {
+          const creatorData = e['creator'];
+          return {
+            id: e['id'].toString(),
+            name: e['name'],
+            coverImageUrl: e['coverImgUrl'],
+            description: e['description'],
+            creator: {
+              id: creatorData['userId'].toString(),
+              nickname: creatorData['nickname']
+            },
+            songsCount: e['trackCount']
+          };
+        });
       }
 
       return undefined;
     });
   }
 
-  searchArtistes(pattern: string): SearchResult<String, Song> {
-    throw new Error('Method not implemented.');
+  searchArtistes(pattern: string): SearchResult<String, ListResponsePack<Artist>> {
+    return this.generalSearch(CloudSearchType.ARTIST, pattern, (data) => {
+      const artistsData = data['result']['artists'];
+
+      if (Array.isArray(artistsData)) {
+        return artistsData.map((e) => ({
+          id: e['id'].toString(),
+          name: e['name'],
+          coverImageUrl: e['picUrl']
+        }));
+      }
+
+      return undefined;
+    });
   }
 
   searchAlbums(pattern: string): SearchResult<String, ListResponsePack<Album>> {
@@ -108,7 +119,7 @@ export class NeteasyApi implements ApiProtocol {
         limit: position.limit,
         offset: position.offset,
         total: true,
-        csrf_token: ''
+        csrf_token: '' // FIXME:
       };
       const response = await this.desktopApi.post('/api/cloudsearch/get/web', data);
 

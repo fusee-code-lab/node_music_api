@@ -32,7 +32,7 @@ export interface ApiProtocol {
    * 根据给定关键词搜索歌词
    * @param pattern 搜索关键词
    */
-  searchArtistes(pattern: string): SearchResult<String, Song>;
+  searchArtistes(pattern: string): SearchResult<String, ListResponsePack<Artist>>;
 
   /**
    * 根据给定关键词搜索专辑
