@@ -1,4 +1,5 @@
 import { Response } from 'node-fetch';
+import { URL } from 'url';
 import { ApiProtocol, CombineSearchResult } from '../api_protocol';
 import { SearchResult, Song, PlayList, Album, Artist, SongDetail } from '../entities';
 import { ListResponsePack, ResponsePack } from '../models';
@@ -221,6 +222,35 @@ export class NeteasyApi implements ApiProtocol {
       // FIXME: handle this error
       console.error(err);
       return new ListResponsePack(response.status, response, []);
+    }
+  }
+
+
+  // FIXME: typeof biteRate
+  // TODO: including br and size in return type.
+  async songUrl(id: string, bitRate: BigInt = BigInt(192_000)): Promise<ResponsePack<URL>> {
+    const params = {
+      ids: [id],
+      br: bitRate,
+      csrf_token: "",
+    };
+    const response = await this.webApi.post("/api/song/enhance/player/url", params);
+
+    try {
+      const data = await response.json();
+      const urlData = data['data'];
+
+      let url: URL | undefined;
+
+      if (Array.isArray(urlData) && urlData.length > 0) {
+        url = !!urlData[0]['url'] ? new URL(urlData[0]['url']) : undefined;
+      }
+
+      return new ResponsePack(response.status, response, url);
+    } catch (err) {
+      // FIXME: handle this error
+      console.error(err);
+      return new ResponsePack(response.status, response, undefined);
     }
   }
 }

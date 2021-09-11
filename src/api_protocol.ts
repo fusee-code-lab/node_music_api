@@ -1,3 +1,4 @@
+import { URL } from 'url';
 import { Album, Artist, PlayList, SearchResult, Song, SongDetail } from './entities';
 import { ListResponsePack, ResponsePack } from './models';
 
@@ -51,4 +52,5 @@ export interface ApiProtocol {
   
   songDetails(id: string): Promise<ResponsePack<SongDetail>>;
 
+  songUrl(id: string): Promise<ResponsePack<URL>>;
 }
