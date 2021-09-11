@@ -15,10 +15,15 @@ export enum SongQualityLevel {
   MEDIUM,
 }
 
-export interface SongQuality {
-  readonly level: SongQualityLevel,
+export interface SongQualityItem {
   readonly bitRate: BigInt,
   readonly bitSize: BigInt,
+}
+
+export interface SongQuality {
+  readonly high?: SongQualityItem,
+  readonly medium?: SongQualityItem,
+  readonly low?: SongQualityItem,
 }
 
 export interface SongDetail {

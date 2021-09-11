@@ -1,5 +1,5 @@
-import { Album, Artist, PlayList, SearchResult, Song } from './entities';
-import { ListResponsePack } from './models';
+import { Album, Artist, PlayList, SearchResult, Song, SongDetail } from './entities';
+import { ListResponsePack, ResponsePack } from './models';
 
 export class CombineSearchResult {
   constructor(
@@ -45,4 +45,10 @@ export interface ApiProtocol {
    * @param pattern 搜索关键词
    */
   search(pattern: string): CombineSearchResult;
+
+
+  // 📒 详情
+  
+  songDetails(id: string): Promise<ResponsePack<SongDetail>>;
+
 }
