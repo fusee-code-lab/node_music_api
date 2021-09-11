@@ -54,8 +54,20 @@ export class NeteasyApi implements ApiProtocol {
     throw new Error('Method not implemented.');
   }
 
-  searchAlbums(pattern: string): SearchResult<String, Album> {
-    throw new Error('Method not implemented.');
+  searchAlbums(pattern: string): SearchResult<String, ListResponsePack<Album>> {
+    return this.generalSearch(CloudSearchType.ALBUM, pattern, (data) => {
+      const albumsData = data['result']['albums'];
+
+      if (Array.isArray(albumsData)) {
+        return albumsData.map((e) => ({
+          id: e['id'].toString(),
+          name: e['name'],
+          coverImageUrl: e['picUrl']
+        }));
+      }
+
+      return undefined;
+    });
   }
 
   search(pattern: string): CombineSearchResult {

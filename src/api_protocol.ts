@@ -38,7 +38,7 @@ export interface ApiProtocol {
    * 根据给定关键词搜索专辑
    * @param pattern 搜索关键词
    */
-  searchAlbums(pattern: string): SearchResult<String, Album>;
+  searchAlbums(pattern: string): SearchResult<String, ListResponsePack<Album>>;
 
   /**
    * 根据给定关键词混合搜索，包括 音乐、播放列表、歌手、专辑
