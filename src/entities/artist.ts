@@ -1,10 +1,13 @@
-import { VendorUser } from "./vendor_user";
+import { VendorUser } from './vendor_user';
 
 export interface Artist {
   readonly id: string;
   readonly name: string;
   readonly coverImageUrl: string;
-  readonly user: VendorUser;
+}
+
+export interface ArtistDetail {
+  readonly artist: Artist;
   readonly briefDescription: string;
   readonly albumCount: number;
   readonly musicCount: number;

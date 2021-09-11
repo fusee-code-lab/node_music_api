@@ -31,17 +31,21 @@ export interface SearchResultPosition {
 export type FetchResultFunc<SearchOptions, Result> = (
   options: SearchOptions,
   position: SearchResultPosition
-) => Promise<Result>;
+) => Promise<Result | undefined>;
 
 /**
  * 搜索结果处理类，支持分页等操作
  */
 export class SearchResult<SearchOptions, Result> implements AsyncIterator<Result> {
+  private static readonly DEFAULT_LIMIT = 20;
+
   constructor(
-    private fetchFunc: FetchResultFunc<SearchOptions, Result>,
-    private position: SearchResultPosition,
     private searchOptions: SearchOptions,
-    private hasNextPage: (currentPosition: SearchResultPosition) => boolean,
+    private fetchFunc: FetchResultFunc<SearchOptions, Result>,
+    private position: SearchResultPosition = {
+      limit: SearchResult.DEFAULT_LIMIT,
+      offset: 0,
+    }
   ) {}
 
   /**
@@ -71,7 +75,7 @@ export class SearchResult<SearchOptions, Result> implements AsyncIterator<Result
     const result = await this.fetchFunc(this.searchOptions, this.position);
     this.position.offset += this.position.limit;
     return {
-      done: this.hasNextPage(this.position),
+      done: !result,
       value: result,
     }
   } 
