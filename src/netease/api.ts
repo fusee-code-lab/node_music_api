@@ -4,7 +4,6 @@ import { SearchResult, Song, PlayList, Album, Artist } from '../entities';
 import { ListResponsePack } from '../models';
 import { CloudSearchType } from './models';
 import { NeteasyMusicApiType, NeteasyNetwork } from './network';
-import querystring from "querystring";
 
 export class NeteasyApi implements ApiProtocol {
   private readonly desktopApi = NeteasyNetwork.buildFor(NeteasyMusicApiType.WEB);
@@ -50,12 +49,15 @@ export class NeteasyApi implements ApiProtocol {
   searchPlayLists(pattern: string): SearchResult<string, PlayList> {
     throw new Error('Method not implemented.');
   }
+
   searchArtistes(pattern: string): SearchResult<String, Song> {
     throw new Error('Method not implemented.');
   }
+
   searchAlbums(pattern: string): SearchResult<String, Album> {
     throw new Error('Method not implemented.');
   }
+
   search(pattern: string): CombineSearchResult {
     throw new Error('Method not implemented.');
   }

@@ -58,6 +58,7 @@ export class NeteasyNetwork {
         const newUrl = url.replace(/\w*api/g, NeteasyMusicApiType.apiPrefix(this.apiType));
 
         requestUrl = newUrl;
+        // FIXME: fix waring
         requestInit = { headers, body: querystring.stringify(requestData as unknown as any) };
 
         break;
