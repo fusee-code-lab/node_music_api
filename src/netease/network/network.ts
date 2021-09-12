@@ -1,4 +1,4 @@
-import fetch, { HeaderInit, RequestInit, Response } from 'node-fetch';
+import fetch, { HeaderInit, HeadersInit, RequestInit, Response } from 'node-fetch';
 import { URL } from 'url';
 import { chooseUserAgent, HttpHeaders, HttpMethod, UserAgentType } from '../../utils';
 import { NeteasyMusicApiType } from './api_type';
@@ -93,13 +93,16 @@ export class NeteasyNetwork {
       [HttpHeaders.hostHeader]: 'music.163.com',
     };
 
-    const headers: HeaderInit = init.headers ?? {};
+    const headers: HeadersInit = init.headers ?? {};
+    // @ts-ignore
     headers[HttpHeaders.userAgentHeader] = chooseUserAgent(ua);
 
     if (init.method?.toUpperCase() === HttpMethod.POST) {
+      // @ts-ignore
       headers[HttpHeaders.contentTypeHeader] = 'application/x-www-form-urlencoded';
     }
     if (path.includes('music.163.com')) {
+      // @ts-ignore
       headers[HttpHeaders.refererHeader] = 'https://music.163.com';
     }
 

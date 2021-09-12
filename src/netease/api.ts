@@ -44,7 +44,7 @@ export class NeteasyApi implements ApiProtocol {
         const artists = buildArtists(artistsData);
         const album = buildAlbum(albumData);
 
-        return buildSong(e, artists, album);
+        return buildSong(e, artists ?? [], album);
       });
     });
   }
@@ -92,7 +92,7 @@ export class NeteasyApi implements ApiProtocol {
   private generalSearch<E, Option>(
     type: CloudSearchType,
     options: Option,
-    handleFunc: (data: Object) => Array<E> | undefined
+    handleFunc: (data: any) => Array<E> | undefined
   ): SearchResult<Option, ListResponsePack<E>> {
     return new SearchResult<Option, ListResponsePack<E>>(options, async (options, position) => {
       const data = {
@@ -107,7 +107,7 @@ export class NeteasyApi implements ApiProtocol {
 
       try {
         const json = await response.json();
-        const res = handleFunc(json as Object);
+        const res = handleFunc(json);
         if (!!res) {
           return new ListResponsePack(response.status, response, res);
         }
@@ -154,7 +154,7 @@ export class NeteasyApi implements ApiProtocol {
 
           const album = buildAlbum(albumData);
           const artists = buildArtists(artistData);
-          const song = buildSong(e, artists, album);
+          const song = buildSong(e, artists ?? [], album);
 
           return {
             song,
@@ -203,7 +203,7 @@ export class NeteasyApi implements ApiProtocol {
     } catch (err) {
       // FIXME: handle this error
       console.error(err);
-      return new ResponsePack(response.status, response, undefined);
+      return new ResponsePack<URL>(response.status, response, undefined);
     }
   }
 
@@ -243,11 +243,10 @@ export class NeteasyApi implements ApiProtocol {
       };
 
       return new ResponsePack(response.status, response, lyrics);
-      // return new ResponsePack(response.status, response, url);
     } catch (err) {
       // FIXME: handle this error
       console.error(err);
-      return new ResponsePack(response.status, response, undefined);
+      return new ResponsePack<SongLyrics>(response.status, response, undefined);
     }
   }
 
@@ -274,14 +273,14 @@ export class NeteasyApi implements ApiProtocol {
         createTime: new Date(playListData['createTime']),
         updateTime: new Date(playListData['updateTime']),
         tags: tagsData.map((e) => ({ name: e })),
-        trackIds: trackIdsData.map((e) => e['id'].toString())
+        trackIds: trackIdsData.map((e: any) => e['id'].toString())
       };
 
       return new ResponsePack(response.status, response, playListDetail);
     } catch (err) {
       // FIXME: handle this error
       console.error(err);
-      return new ResponsePack(response.status, response, undefined);
+      return new ResponsePack<PlayListDetail>(response.status, response, undefined);
     }
   }
 
@@ -310,7 +309,7 @@ export class NeteasyApi implements ApiProtocol {
     } catch (err) {
       // FIXME: handle this error
       console.error(err);
-      return new ResponsePack(response.status, response, undefined);
+      return new ResponsePack<AlbumDetail>(response.status, response, undefined);
     }
   }
 }
