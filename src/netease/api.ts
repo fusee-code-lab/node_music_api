@@ -11,7 +11,14 @@ import {
   SongLyricsItem,
   PlayListDetail,
   VendorUser,
-  AlbumDetail
+  AlbumDetail,
+  buildArtists,
+  buildAlbum,
+  buildSong,
+  buildAlbums,
+  buildVendorUser,
+  buildPlayList,
+  buildSongQuality
 } from '../entities';
 import { ListResponsePack, ResponsePack, SearchResult } from '../models';
 import { ensureArray } from '../utils';
@@ -34,27 +41,10 @@ export class NeteasyApi implements ApiProtocol {
         const albumData = e['al']; // object // TODO: isObject
 
         // TODO: 这里的 artist 并没有 cover url，将该字段设为 Optional
-        const artists: Artist[] = Array.isArray(artistsData)
-          ? artistsData.map((e) => ({
-              id: e['id'].toString(),
-              name: e['name'],
-              coverImageUrl: e['img1v1Url']
-            }))
-          : [];
+        const artists = buildArtists(artistsData);
+        const album = buildAlbum(albumData);
 
-        const album: Album = {
-          id: albumData['id'].toString(),
-          name: albumData['name'],
-          coverImageUrl: albumData['picUrl']
-        };
-
-        return {
-          id: e['id'],
-          name: e['name'],
-          artists,
-          millSecondsDuration: e['dt'],
-          album
-        };
+        return buildSong(e, artists, album);
       });
     });
   }
@@ -66,17 +56,9 @@ export class NeteasyApi implements ApiProtocol {
       if (Array.isArray(playlistsData)) {
         return playlistsData.map((e) => {
           const creatorData = e['creator'];
-          return {
-            id: e['id'].toString(),
-            name: e['name'],
-            coverImageUrl: e['coverImgUrl'],
-            description: e['description'],
-            creator: {
-              id: creatorData['userId'].toString(),
-              nickname: creatorData['nickname']
-            },
-            songsCount: e['trackCount']
-          };
+
+          const creator = buildVendorUser(creatorData);
+          return buildPlayList(e, creator);
         });
       }
 
@@ -87,35 +69,18 @@ export class NeteasyApi implements ApiProtocol {
   searchArtistes(pattern: string): SearchResult<String, ListResponsePack<Artist>> {
     return this.generalSearch(CloudSearchType.ARTIST, pattern, (data) => {
       const artistsData = data['result']['artists'];
-
-      if (Array.isArray(artistsData)) {
-        return artistsData.map((e) => ({
-          id: e['id'].toString(),
-          name: e['name'],
-          coverImageUrl: e['picUrl']
-        }));
-      }
-
-      return undefined;
+      return buildArtists(artistsData);
     });
   }
 
   searchAlbums(pattern: string): SearchResult<String, ListResponsePack<Album>> {
     return this.generalSearch(CloudSearchType.ALBUM, pattern, (data) => {
       const albumsData = data['result']['albums'];
-
-      if (Array.isArray(albumsData)) {
-        return albumsData.map((e) => ({
-          id: e['id'].toString(),
-          name: e['name'],
-          coverImageUrl: e['picUrl']
-        }));
-      }
-
-      return undefined;
+      return buildAlbums(albumsData);
     });
   }
 
+  // TODO:
   search(pattern: string): CombineSearchResult {
     throw new Error('Method not implemented.');
   }
@@ -183,48 +148,13 @@ export class NeteasyApi implements ApiProtocol {
           const mediumQualityData = e['m'];
           const lowQualityData = e['l'];
 
-          const album: Album = {
-            id: albumData['id'].toString(),
-            name: albumData['name'],
-            coverImageUrl: albumData['pic_str']
-          };
-          const artists: Artist[] = Array.isArray(artistData)
-            ? artistData.map((e) => ({
-                id: e['id'].toString(),
-                name: e['name'],
-                coverImageUrl: e['img1v1Url']
-              }))
-            : [];
-          const song: Song = {
-            id: e['id'].toString(),
-            name: e['name'],
-            artists: artists,
-            millSecondsDuration: e['dt'],
-            album: album
-          };
+          const album = buildAlbum(albumData);
+          const artists = buildArtists(artistData);
+          const song = buildSong(e, artists, album);
 
           return {
             song,
-            quality: {
-              high: !!highQualityData
-                ? {
-                    bitRate: BigInt(highQualityData['br']),
-                    bitSize: BigInt(highQualityData['size'])
-                  }
-                : highQualityData,
-              medium: !!mediumQualityData
-                ? {
-                    bitRate: BigInt(mediumQualityData['br']),
-                    bitSize: BigInt(mediumQualityData['size'])
-                  }
-                : mediumQualityData,
-              low: !!lowQualityData
-                ? {
-                    bitRate: BigInt(lowQualityData['br']),
-                    bitSize: BigInt(lowQualityData['size'])
-                  }
-                : lowQualityData
-            }
+            quality: buildSongQuality(highQualityData, mediumQualityData, lowQualityData)
           };
         });
         return new ListResponsePack(response.status, response, songsDetail);
@@ -285,7 +215,7 @@ export class NeteasyApi implements ApiProtocol {
     try {
       const lyricsData = await response.json();
       const originalLyricsData = lyricsData['lrc'];
-      // TODO 还有个 klyric 不知道干嘛的 测试 url http://localhost:3000/lyric?id=33894312
+      // TODO: 还有个 klyric 不知道干嘛的 测试 url http://localhost:3000/lyric?id=33894312
       const translatedLyricsData = lyricsData['tlyric'];
 
       const originalLyrics: SongLyricsItem | undefined =
@@ -332,18 +262,9 @@ export class NeteasyApi implements ApiProtocol {
       const creatorData = playListData['creator'];
       const tagsData = ensureArray<string>(playListData['tags']);
 
-      const creator: VendorUser = {
-        id: creatorData['userId'].toString(),
-        nickname: creatorData['nickname']
-      };
-      const playList: PlayList = {
-        id: playListData['id'].toString(),
-        name: playListData['name'],
-        coverImageUrl: playListData['coverImgUrl'],
-        description: playListData['description'],
-        creator: creator,
-        songsCount: playListData['trackCount']
-      };
+      const creator = buildVendorUser(creatorData);
+      const playList = buildPlayList(playListData, creator);
+
       const playListDetail: PlayListDetail = {
         playList: playList,
         createTime: new Date(playListData['createTime']),
@@ -369,23 +290,10 @@ export class NeteasyApi implements ApiProtocol {
       const artistsData = ensureArray(data['album']);
       const songsData = ensureArray(data['songs']);
 
-      const album: Album = {
-        id: albumData['id'],
-        name: albumData['name'],
-        coverImageUrl: albumData['picUrl']
-      };
-      const artists: Artist[] = artistsData.map((e) => ({
-        id: e['id'].toString(),
-        name: e['name'],
-        coverImageUrl: e['img1v1Url']
-      }));
-      const songs: Song[] = songsData.map((e) => ({
-        id: e['id'].toString(),
-        name: e['name'],
-        artists: artists,
-        millSecondsDuration: e['dt'],
-        album: album
-      }));
+      const album = buildAlbum(albumData);
+      const artists = buildArtists(artistsData) ?? [];
+      const songs: Song[] = songsData.map((e) => buildSong(e, artists, album));
+      
       const detail: AlbumDetail = {
         album: album,
         artists: artists,

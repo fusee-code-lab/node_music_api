@@ -13,6 +13,17 @@ export interface PlayList {
   readonly songsCount: number;
 }
 
+export function buildPlayList(playListData: any, creator: VendorUser): PlayList {
+  return {
+    id: playListData['id'].toString(),
+    name: playListData['name'],
+    coverImageUrl: playListData['coverImgUrl'],
+    description: playListData['description'],
+    creator,
+    songsCount: playListData['trackCount']
+  };
+}
+
 export interface PlayListDetail {
   readonly playList: PlayList;
   readonly createTime: Date;
