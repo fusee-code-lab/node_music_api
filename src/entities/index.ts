@@ -1,5 +1,4 @@
 export * from './vendors';
-export * from './search_result';
 
 export * from './album';
 export * from './artist';

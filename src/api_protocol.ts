@@ -1,6 +1,6 @@
 import { URL } from 'url';
-import { Album, Artist, PlayList, PlayListDetail, SearchResult, Song, SongDetail, SongLyrics } from './entities';
-import { ListResponsePack, ResponsePack } from './models';
+import { Album, Artist, PlayList, PlayListDetail, Song, SongDetail, SongLyrics } from './entities';
+import { ListResponsePack, ResponsePack, SearchResult } from './models';
 
 export class CombineSearchResult {
   constructor(

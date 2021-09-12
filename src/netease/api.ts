@@ -2,7 +2,6 @@ import { Response } from 'node-fetch';
 import { URL } from 'url';
 import { ApiProtocol, CombineSearchResult } from '../api_protocol';
 import {
-  SearchResult,
   Song,
   PlayList,
   Album,
@@ -13,7 +12,7 @@ import {
   PlayListDetail,
   VendorUser
 } from '../entities';
-import { ListResponsePack, ResponsePack } from '../models';
+import { ListResponsePack, ResponsePack, SearchResult } from '../models';
 import { ensureArray } from '../utils';
 import { CloudSearchType } from './models';
 import { NeteasyMusicApiType, NeteasyNetwork } from './network';

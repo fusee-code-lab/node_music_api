@@ -36,7 +36,7 @@ export type FetchResultFunc<SearchOptions, Result> = (
 /**
  * 搜索结果处理类，支持分页等操作
  */
-export class SearchResult<SearchOptions, Result> implements AsyncIterator<Result> {
+export class SearchResult<SearchOptions, Result> {
   private static readonly DEFAULT_LIMIT = 20;
 
   constructor(
@@ -71,12 +71,9 @@ export class SearchResult<SearchOptions, Result> implements AsyncIterator<Result
   /**
    * 异步地请求下一批数据
    */
-  public async next(): Promise<IteratorResult<Result, Result>> {
+  public async nextPage(): Promise<Result | undefined> {
     const result = await this.fetchFunc(this.searchOptions, this.position);
     this.position.offset += this.position.limit;
-    return {
-      done: !result,
-      value: result,
-    }
+    return result;
   } 
 }
