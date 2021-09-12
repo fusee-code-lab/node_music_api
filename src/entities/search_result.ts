@@ -71,7 +71,7 @@ export class SearchResult<SearchOptions, Result> implements AsyncIterator<Result
   /**
    * 异步地请求下一批数据
    */
-  public async next(): Promise<IteratorResult<Result>> {
+  public async next(): Promise<IteratorResult<Result, Result>> {
     const result = await this.fetchFunc(this.searchOptions, this.position);
     this.position.offset += this.position.limit;
     return {

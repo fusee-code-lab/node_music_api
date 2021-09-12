@@ -1,8 +1,20 @@
 import { Response } from 'node-fetch';
 import { URL } from 'url';
 import { ApiProtocol, CombineSearchResult } from '../api_protocol';
-import { SearchResult, Song, PlayList, Album, Artist, SongDetail, SongLyrics, SongLyricsItem } from '../entities';
+import {
+  SearchResult,
+  Song,
+  PlayList,
+  Album,
+  Artist,
+  SongDetail,
+  SongLyrics,
+  SongLyricsItem,
+  PlayListDetail,
+  VendorUser
+} from '../entities';
 import { ListResponsePack, ResponsePack } from '../models';
+import { ensureArray } from '../utils';
 import { CloudSearchType } from './models';
 import { NeteasyMusicApiType, NeteasyNetwork } from './network';
 
@@ -298,6 +310,49 @@ export class NeteasyApi implements ApiProtocol {
 
       return new ResponsePack(response.status, response, lyrics);
       // return new ResponsePack(response.status, response, url);
+    } catch (err) {
+      // FIXME: handle this error
+      console.error(err);
+      return new ResponsePack(response.status, response, undefined);
+    }
+  }
+
+  async playListDetails(id: string): Promise<ResponsePack<PlayListDetail>> {
+    const data = {
+      id: id,
+      n: 100000,
+      s: 0 // 歌单最近的 s 个收藏者,默认为8
+    };
+    const response = await this.webApi.post('/api/v6/playlist/detail', data);
+
+    try {
+      const data = await response.json();
+      const playListData = data['playlist'];
+      const trackIdsData = ensureArray(playListData['trackIds']);
+      const creatorData = playListData['creator'];
+      const tagsData = ensureArray<string>(playListData['tags']);
+
+      const creator: VendorUser = {
+        id: creatorData['userId'].toString(),
+        nickname: creatorData['nickname']
+      };
+      const playList: PlayList = {
+        id: playListData['id'].toString(),
+        name: playListData['name'],
+        coverImageUrl: playListData['coverImgUrl'],
+        description: playListData['description'],
+        creator: creator,
+        songsCount: playListData['trackCount']
+      };
+      const playListDetail: PlayListDetail = {
+        playList: playList,
+        createTime: new Date(playListData['createTime']),
+        updateTime: new Date(playListData['updateTime']),
+        tags: tagsData.map((e) => ({ name: e })),
+        trackIds: trackIdsData.map((e) => e['id'].toString())
+      };
+
+      return new ResponsePack(response.status, response, playListDetail);
     } catch (err) {
       // FIXME: handle this error
       console.error(err);
