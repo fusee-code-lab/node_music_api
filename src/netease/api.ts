@@ -66,23 +66,27 @@ export class NeteasyApi implements ApiProtocol {
     });
   }
 
-  searchArtistes(pattern: string): SearchResult<String, ListResponsePack<Artist>> {
+  searchArtistes(pattern: string): SearchResult<string, ListResponsePack<Artist>> {
     return this.generalSearch(CloudSearchType.ARTIST, pattern, (data) => {
       const artistsData = data['result']['artists'];
       return buildArtists(artistsData);
     });
   }
 
-  searchAlbums(pattern: string): SearchResult<String, ListResponsePack<Album>> {
+  searchAlbums(pattern: string): SearchResult<string, ListResponsePack<Album>> {
     return this.generalSearch(CloudSearchType.ALBUM, pattern, (data) => {
       const albumsData = data['result']['albums'];
       return buildAlbums(albumsData);
     });
   }
 
-  // TODO:
   search(pattern: string): CombineSearchResult {
-    throw new Error('Method not implemented.');
+    return new CombineSearchResult(
+      this.searchSongs(pattern),
+      this.searchPlayLists(pattern),
+      this.searchArtistes(pattern),
+      this.searchAlbums(pattern),
+    );
   }
 
   private generalSearch<E, Option>(

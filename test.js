@@ -1,16 +1,9 @@
 const { NeteasyApi } = require('.');
 
-const api = new NeteasyApi();
+async function main() {
+  const api = new NeteasyApi();
+  const res = await api.search('可惜没如果').songs.nextPage();
+  console.log(res.data.map(i => i.name));
+}
 
-const res = api
-  .searchAlbums('林俊杰')
-  .limit(1)
-  .nextPage()
-  .then((list) => {
-    const album = list.data[0];
-    console.log(`id: ${album.id} name: ${album.name}`);
-
-    api.albumDetails(album.id).then((detail) => {
-      console.log(detail.data.description);
-    });
-  });
+main().then()

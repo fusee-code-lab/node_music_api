@@ -4,10 +4,10 @@ import { ListResponsePack, ResponsePack, SearchResult } from './models';
 
 export class CombineSearchResult {
   constructor(
-    readonly songs: SearchResult<string, Song>,
-    readonly playlists: SearchResult<string, PlayList>,
-    readonly artists: SearchResult<string, Artist>,
-    readonly albums: SearchResult<string, Album>
+    readonly songs: SearchResult<string, ListResponsePack<Song>>,
+    readonly playlists: SearchResult<string, ListResponsePack<PlayList>>,
+    readonly artists: SearchResult<string, ListResponsePack<Artist>>,
+    readonly albums: SearchResult<string, ListResponsePack<Album>>
   ) {}
 }
 
@@ -33,13 +33,13 @@ export interface ApiProtocol {
    * 根据给定关键词搜索歌词
    * @param pattern 搜索关键词
    */
-  searchArtistes(pattern: string): SearchResult<String, ListResponsePack<Artist>>;
+  searchArtistes(pattern: string): SearchResult<string, ListResponsePack<Artist>>;
 
   /**
    * 根据给定关键词搜索专辑
    * @param pattern 搜索关键词
    */
-  searchAlbums(pattern: string): SearchResult<String, ListResponsePack<Album>>;
+  searchAlbums(pattern: string): SearchResult<string, ListResponsePack<Album>>;
 
   /**
    * 根据给定关键词混合搜索，包括 音乐、播放列表、歌手、专辑
