@@ -1,7 +1,7 @@
 import { Response } from 'node-fetch';
 import { URL } from 'url';
 import { ApiProtocol, CombineSearchResult } from '../api_protocol';
-import { SearchResult, Song, PlayList, Album, Artist, SongDetail } from '../entities';
+import { SearchResult, Song, PlayList, Album, Artist, SongDetail, SongLyrics, SongLyricsItem } from '../entities';
 import { ListResponsePack, ResponsePack } from '../models';
 import { CloudSearchType } from './models';
 import { NeteasyMusicApiType, NeteasyNetwork } from './network';
@@ -225,16 +225,23 @@ export class NeteasyApi implements ApiProtocol {
     }
   }
 
-
   // FIXME: typeof biteRate
   // TODO: including br and size in return type.
+  // return {
+  //   status: true,
+  //   data: {
+  //     url: data[0].url,
+  //     br: data[0].br,
+  //     size: data[0].size,
+  //   },
+  // };
   async songUrl(id: string, bitRate: BigInt = BigInt(192_000)): Promise<ResponsePack<URL>> {
     const params = {
       ids: [id],
       br: bitRate,
-      csrf_token: "",
+      csrf_token: ''
     };
-    const response = await this.webApi.post("/api/song/enhance/player/url", params);
+    const response = await this.webApi.post('/api/song/enhance/player/url', params);
 
     try {
       const data = await response.json();
@@ -247,6 +254,50 @@ export class NeteasyApi implements ApiProtocol {
       }
 
       return new ResponsePack(response.status, response, url);
+    } catch (err) {
+      // FIXME: handle this error
+      console.error(err);
+      return new ResponsePack(response.status, response, undefined);
+    }
+  }
+
+  async songLyrics(id: string): Promise<ResponsePack<SongLyrics>> {
+    const data = {
+      id: id,
+      lv: -1,
+      kv: -1,
+      tv: -1
+    };
+    const response = await this.webApi.post('/api/song/lyric', data);
+
+    try {
+      const lyricsData = await response.json();
+      const originalLyricsData = lyricsData['lrc'];
+      // TODO 还有个 klyric 不知道干嘛的 测试 url http://localhost:3000/lyric?id=33894312
+      const translatedLyricsData = lyricsData['tlyric'];
+
+      const originalLyrics: SongLyricsItem | undefined =
+        originalLyricsData['lyric'] === ''
+          ? undefined
+          : {
+              strRaw: originalLyricsData['lyric'],
+              content: [] // TODO: 歌词解析
+            };
+      const translatedLyrics: SongLyricsItem | undefined =
+        translatedLyricsData['lyric'] == ''
+          ? undefined
+          : {
+              strRaw: translatedLyricsData['lyric'].toString(),
+              content: [] // TODO: 歌词解析
+            };
+
+      const lyrics: SongLyrics = {
+        original: originalLyrics,
+        translated: translatedLyrics
+      };
+
+      return new ResponsePack(response.status, response, lyrics);
+      // return new ResponsePack(response.status, response, url);
     } catch (err) {
       // FIXME: handle this error
       console.error(err);
