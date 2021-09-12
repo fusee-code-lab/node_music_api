@@ -10,7 +10,8 @@ import {
   SongLyrics,
   SongLyricsItem,
   PlayListDetail,
-  VendorUser
+  VendorUser,
+  AlbumDetail
 } from '../entities';
 import { ListResponsePack, ResponsePack, SearchResult } from '../models';
 import { ensureArray } from '../utils';
@@ -352,6 +353,48 @@ export class NeteasyApi implements ApiProtocol {
       };
 
       return new ResponsePack(response.status, response, playListDetail);
+    } catch (err) {
+      // FIXME: handle this error
+      console.error(err);
+      return new ResponsePack(response.status, response, undefined);
+    }
+  }
+
+  async albumDetails(id: string): Promise<ResponsePack<AlbumDetail>> {
+    const response = await this.webApi.post(`/api/v1/album/${id}`);
+
+    try {
+      const data = await response.json();
+      const albumData = data['album'];
+      const artistsData = ensureArray(data['album']);
+      const songsData = ensureArray(data['songs']);
+
+      const album: Album = {
+        id: albumData['id'],
+        name: albumData['name'],
+        coverImageUrl: albumData['picUrl']
+      };
+      const artists: Artist[] = artistsData.map((e) => ({
+        id: e['id'].toString(),
+        name: e['name'],
+        coverImageUrl: e['img1v1Url']
+      }));
+      const songs: Song[] = songsData.map((e) => ({
+        id: e['id'].toString(),
+        name: e['name'],
+        artists: artists,
+        millSecondsDuration: e['dt'],
+        album: album
+      }));
+      const detail: AlbumDetail = {
+        album: album,
+        artists: artists,
+        description: albumData['description'],
+        publishDate: new Date(albumData['publishTime']),
+        songs: songs
+      };
+
+      return new ResponsePack(response.status, response, detail);
     } catch (err) {
       // FIXME: handle this error
       console.error(err);

@@ -3,14 +3,14 @@ const { NeteasyApi } = require('.');
 const api = new NeteasyApi();
 
 const res = api
-  .searchPlayLists('恋爱')
+  .searchAlbums('林俊杰')
   .limit(1)
   .nextPage()
   .then((list) => {
-    const playList = list.data[0];
-    console.log(`id: ${playList.id} name: ${playList.name}`);
+    const album = list.data[0];
+    console.log(`id: ${album.id} name: ${album.name}`);
 
-    api.playListDetails(playList.id).then((detail) => {
-      console.log(JSON.stringify(detail, null, 2));
+    api.albumDetails(album.id).then((detail) => {
+      console.log(detail.data.description);
     });
   });

@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { Album, Artist, PlayList, PlayListDetail, Song, SongDetail, SongLyrics } from './entities';
+import { Album, AlbumDetail, Artist, PlayList, PlayListDetail, Song, SongDetail, SongLyrics } from './entities';
 import { ListResponsePack, ResponsePack, SearchResult } from './models';
 
 export class CombineSearchResult {
@@ -53,6 +53,8 @@ export interface ApiProtocol {
   playListDetails(id: string): Promise<ResponsePack<PlayListDetail>>;
 
   songDetails(id: string): Promise<ResponsePack<SongDetail>>;
+
+  albumDetails(id: string): Promise<ResponsePack<AlbumDetail>>;
 
   songUrl(id: string): Promise<ResponsePack<URL>>;
 

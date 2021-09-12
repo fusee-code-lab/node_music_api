@@ -24,11 +24,11 @@ export class NeteasyNetwork {
     return res.toString();
   }
 
-  async get(path: string, body: Object): Promise<Response> {
+  async get(path: string, body: Object = {}): Promise<Response> {
     return this.request(HttpMethod.GET, path, body);
   }
 
-  async post(path: string, body: Object): Promise<Response> {
+  async post(path: string, body: Object = {}): Promise<Response> {
     return this.request(HttpMethod.POST, path, body);
   }
 
