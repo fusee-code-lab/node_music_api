@@ -7,10 +7,10 @@ const { qq, netease } = require('./dist/index.js')
 //   })
 // 2611153424
 
-// netease.song_url([2611153424, 1445247636])
-//   .then(result => {
-//     console.log(result);
-//   })
+netease.song_url([2611153424, 1445247636])
+  .then(result => {
+    console.log(result);
+  })
 
 // netease.search('Shadowbringers', 1, 1, 1)
 //   .then(result => {

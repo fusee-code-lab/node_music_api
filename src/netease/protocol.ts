@@ -112,23 +112,3 @@ export const get_search_type = (type: MusicSearchType) => {
       return 1009;
   }
 };
-
-
-export const get_sound_quality_type = (type: SongQualityType) => {
-  switch (type) {
-    case SongQualityType.standard:
-      return SoundQualityType.standard
-    case SongQualityType.exhigh:
-      return SoundQualityType.exhigh
-    case SongQualityType.lossless:
-      return SoundQualityType.lossless
-    case SongQualityType.hires:
-      return SoundQualityType.hires
-    case SongQualityType.jyeffect:
-      return SoundQualityType.jyeffect
-    case SongQualityType.jymaster:
-      return SoundQualityType.jymaster
-    case SongQualityType.sky:
-      return SoundQualityType.sky
-  }
-}

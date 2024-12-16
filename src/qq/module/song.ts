@@ -1,12 +1,12 @@
 import { SongQualityType } from "../../types/music";
-import { get_req_form, get_sound_quality_type, net, sound_quality_map } from "../protocol";
+import { get_req_form, get_sound_quality_type, net } from "../protocol";
 
 export const song_url = async (
   ids: string[],
-  quality: SongQualityType
+  quality: SongQualityType = SongQualityType.exhigh
 ) => {
   const guid = (Math.random() * 10000000).toFixed(0);
-  const quality_type = get_sound_quality_type(quality) || sound_quality_map[320];
+  const quality_type = get_sound_quality_type(quality)
   if (!quality_type) {
     console.error("不支持的音质类型: " + quality);
     return;
