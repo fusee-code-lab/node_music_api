@@ -1,7 +1,6 @@
 {
   "name": "ting_lib",
   "version": "0.0.1-0",
-  "description": "🎵 A Node.js library to access Netease & QQ music by web api.",
   "keywords": [],
   "author": "fusee-code-lab",
   "repository": {
