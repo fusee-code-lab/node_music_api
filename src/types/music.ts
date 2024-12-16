@@ -24,7 +24,7 @@ export enum MusicSearchType {
 // dolby => 杜比全景声, 
 // jymaster => 超清母带
 
-export const enum SongQualityType {
+export enum SongQualityType {
   standard = 'standard',
   exhigh = 'exhigh',
   lossless = 'lossless',
