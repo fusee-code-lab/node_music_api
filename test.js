@@ -1,6 +1,6 @@
 const { qq, netease } = require('./dist/index.js')
 
-// netease.search('Shadowbringers', 2, 1, 4)
+// qq.search('ff14', 10, 1, 1)
 //   .then(result => {
 //     console.log(result);
 
@@ -12,12 +12,19 @@ const { qq, netease } = require('./dist/index.js')
 //     console.log(result);
 //   })
 
-// qq.search('Shadowbringers', 1, 1, 1)
+// netease.search('Shadowbringers', 1, 1, 1)
 //   .then(result => {
-//     console.log(result.list[0]);
+//     console.log(result);
 //   })
 
-netease.song_list(10157118407)
-  .then(res => {
-    console.log(res.tracks);
-  })
+// qq.song_list(7452914334)
+//   .then(res => {
+//     console.log(res);
+//   })
+
+// 003V3v3l1tqUbx
+
+// qq.lyric('0002JYFJ3vHIoN')
+//   .then(result => {
+//     console.log(result);
+//   })

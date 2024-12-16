@@ -12,7 +12,7 @@ export const song_list = async (
       Referer: 'https://y.qq.com/n/yqq/playlist',
     },
     type: "JSON"
-  }, 'http://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg');
+  }, 'https://i.y.qq.com/qzone-music/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg');
   try {
     if (res && res.data.code === 0) {
       res.data.cdlist.forEach((item: any) => {
