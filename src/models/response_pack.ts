@@ -1,5 +1,3 @@
-import { Response } from 'node-fetch';
-
 export interface BaseResponsePack<Data> {
   readonly status: number;
   readonly rawBody: Response; // FIXME: 也许持有该对象不是很好的说～

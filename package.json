@@ -1,5 +1,5 @@
 {
-  "name": "node_music_api",
+  "name": "ting_lib",
   "version": "0.0.1-0",
   "description": "🎵 A Node.js library to access Netease & QQ music by web api.",
   "keywords": [],
@@ -9,40 +9,18 @@
     "url": "https://github.com/fusee-code-lab"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=22.0.0"
   },
-  "main": "dist/main/index.js",
-  "module": "dist/module/index.js",
-  "typings": "dist/main/src/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c rollup.config.js",
-    "build:watch": "rollup -c rollup.config.js -w",
-    "doc": "typedoc ./src --out dist/docs",
-    "fix:prettier": "prettier \"./src\" --write",
-    "test:prettier": "prettier \"./src\" --list-different",
-    "version:major": "standard-version -r major",
-    "version:minor": "standard-version -r minor",
-    "version:patch": "standard-version -r patch",
-    "version:pre": "standard-version --prerelease",
-    "version:alpha": "standard-version --prerelease alpha"
-  },
-  "dependencies": {
-    "node-abort-controller": "^2.0.0",
-    "node-fetch": "^2.6.1"
+    "build": "tsup"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^19.0.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@types/node": "^16.7.13",
-    "@types/node-fetch": "^2.5.8",
-    "prettier": "^2.3.1",
-    "rollup": "^2.51.2",
-    "rollup-plugin-sourcemaps": "^0.6.3",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "standard-version": "^9.3.0",
-    "tslib": "^2.3.0",
-    "typedoc": "^0.22.2",
-    "typescript": "^4.3.2"
+    "@types/node": "^22.10.1",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
   }
 }
