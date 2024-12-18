@@ -1,11 +1,15 @@
 {
-  "name": "ting-lib",
+  "name": "@fuseecodelab/ting-lib",
   "version": "0.0.1-0",
   "keywords": [],
-  "author": "fusee-code-lab",
+  "author": "fusee-code-lab (https://github.com/fusee-code-lab)",
   "repository": {
     "type": "git",
     "url": "https://github.com/fusee-code-lab"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "engines": {
     "node": ">=22.0.0"

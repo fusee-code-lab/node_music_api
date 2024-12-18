@@ -9,7 +9,8 @@ export default defineConfig(() => ({
   clean: true,
   format: ['esm', 'cjs'],
   entry: {
-    index: 'src/index.ts'
+    index: 'src/index.ts',
+    types: 'src/types/index.ts'
   },
   external: [...builtinModules]
 }));
