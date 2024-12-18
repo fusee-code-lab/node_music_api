@@ -1,5 +1,4 @@
-import { SearchType, SoundQualityType } from "NeteaseCloudMusicApi";
-import { MusicSearchType, SongItem, SongQualityType } from "../types/music";
+import { MusicSearchType, SongItem } from "../types/music";
 
 const getRestrictLevel = (bm5r: any, fC7v: any) => {
   if (!bm5r) return 0;
@@ -94,21 +93,21 @@ export const get_song_info_in_list = (info: any): SongItem => {
 
 export const get_search_type = (type: MusicSearchType) => {
   switch (type) {
-    case MusicSearchType.single:
+    case "single":
       return 1;
-    case MusicSearchType.album:
+    case "album":
       return 10;
-    case MusicSearchType.artist:
+    case "artist":
       return 100;
-    case MusicSearchType.playlist:
+    case "playlist":
       return 1000;
-    case MusicSearchType.user:
+    case "user":
       return 1002;
-    case MusicSearchType.mv:
+    case "mv":
       return 1004;
-    case MusicSearchType.lyric:
+    case "lyric":
       return 1006;
-    case MusicSearchType.dj:
+    case "dj":
       return 1009;
   }
 };

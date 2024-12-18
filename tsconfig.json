@@ -3,6 +3,7 @@
     "outDir": "dist",
     "moduleResolution": "bundler",
     "strict": true,
+    "lib": ["DOM", "ESNext"],
     "typeRoots": ["node_modules/@types"],
     "target": "ESNext",
     "module": "ESNext",

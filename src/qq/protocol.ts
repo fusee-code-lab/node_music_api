@@ -169,21 +169,21 @@ export const get_song_info_in_list = (info: any): SongItem => {
 
 export const get_search_type = (type: MusicSearchType) => {
   switch (type) {
-    case MusicSearchType.single:
+    case 'single':
       return 0;
-    case MusicSearchType.album:
+    case 'album':
       return 2;
-    case MusicSearchType.artist:
+    case 'artist':
       return 8;
-    case MusicSearchType.playlist:
+    case 'playlist':
       return 3;
-    case MusicSearchType.user:
+    case 'user':
       return 8;
-    case MusicSearchType.mv:
+    case 'mv':
       return 4;
-    case MusicSearchType.lyric:
+    case 'lyric':
       return 7;
-    case MusicSearchType.dj:
+    case 'dj':
       return null;
   }
 };
@@ -213,19 +213,19 @@ export const sound_quality_map: { [key: string]: { s: string; e: string } } = {
 
 export const get_sound_quality_type = (type: SongQualityType) => {
   switch (type) {
-    case SongQualityType.standard:
+    case 'standard':
       return sound_quality_map['128']
-    case SongQualityType.exhigh:
+    case 'exhigh':
       return sound_quality_map['320']
-    case SongQualityType.lossless:
+    case 'lossless':
       return sound_quality_map['320']
-    case SongQualityType.hires:
+    case 'hires':
       return sound_quality_map['flac']
-    case SongQualityType.jyeffect:
+    case 'jyeffect':
       return sound_quality_map['flac']
-    case SongQualityType.jymaster:
+    case 'jymaster':
       return sound_quality_map['flac']
-    case SongQualityType.sky:
+    case 'sky':
       return sound_quality_map['flac']
   }
 }

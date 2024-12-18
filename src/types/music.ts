@@ -1,18 +1,6 @@
-export enum MusicType {
-  Netease = 'netease',
-  QQ = 'qq'
-}
+export type MusicType = 'netease' | 'qq';
 
-export enum MusicSearchType {
-  single = 1, // 单曲
-  album = 2, // 专辑
-  artist = 3, // 歌手
-  playlist = 4, // 歌单
-  user = 5, // 用户
-  mv = 6, // mv
-  lyric = 7, // 歌词
-  dj = 8 // 电台
-}
+export type MusicSearchType = 'single' | 'album' | 'playlist' | 'artist' | 'mv' | 'user' | 'lyric' | 'dj';
 
 // standard => 标准,
 // higher => 较高, 
@@ -23,16 +11,7 @@ export enum MusicSearchType {
 // sky => 沉浸环绕声, 
 // dolby => 杜比全景声, 
 // jymaster => 超清母带
-
-export enum SongQualityType {
-  standard = 'standard',
-  exhigh = 'exhigh',
-  lossless = 'lossless',
-  hires = 'hires',
-  jyeffect = 'jyeffect',
-  jymaster = 'jymaster',
-  sky = 'sky'
-}
+export type SongQualityType = 'standard' | 'higher' | 'exhigh' | 'lossless' | 'hires' | 'jyeffect' | 'sky' | 'dolby' | 'jymaster';
 
 export interface SongItem {
   album: {

@@ -13,7 +13,7 @@ export const search = async (keywords: string, limit: number, offset: number, ty
   });
   if (res && res.status === 200 && res.body && res.body.code === 200 && res.body.result) {
     switch (type) {
-      case MusicSearchType.single:
+      case 'single':
         const songs = (res.body.result as any)['songs'] as any[]
         if (songs) {
           (res.body.result as any)['songs'] = songs.map(song => get_song_info(song));

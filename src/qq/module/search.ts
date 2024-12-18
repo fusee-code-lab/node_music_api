@@ -1,7 +1,7 @@
 import { MusicSearchType } from "../../types/music";
 import { get_req_form, get_search_type, get_song_info, net } from "../protocol";
 export const search = async (
-  keywords: string, limit: number, offset: number, type: MusicSearchType
+  keywords: string, limit: number, offset: number, type: MusicSearchType = 'single'
 ) => {
   const search_type = get_search_type(type);
   if (search_type === null) return;

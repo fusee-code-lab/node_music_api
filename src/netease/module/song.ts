@@ -1,7 +1,7 @@
 import { song_url_v1 } from "NeteaseCloudMusicApi";
 import { SongQualityType } from "../../types/music";
 
-export const song_url = async (ids: number[], quality: SongQualityType = SongQualityType.exhigh) => {
+export const song_url = async (ids: number[], quality: SongQualityType = "exhigh") => {
   const res = await song_url_v1({
     id: ids.join(','),
     level: quality as any

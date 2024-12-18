@@ -3,7 +3,7 @@ import { get_req_form, get_sound_quality_type, net } from "../protocol";
 
 export const song_url = async (
   ids: string[],
-  quality: SongQualityType = SongQualityType.exhigh
+  quality: SongQualityType = 'exhigh'
 ) => {
   const guid = (Math.random() * 10000000).toFixed(0);
   const quality_type = get_sound_quality_type(quality)
