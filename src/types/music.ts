@@ -35,6 +35,7 @@ export interface SongItem {
     999: boolean,
   },
   mv: string | number,
+  source_type: MusicType,
   [key: string]: any
 }
 

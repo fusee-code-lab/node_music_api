@@ -122,7 +122,8 @@ export const get_song_info = (info: any): SongItem => {
       320: Boolean(info.file.size_320 || info.file.size_320mp3),
       999: Boolean(info.file.size_flac)
     },
-    mv: info.mv.vid || null
+    mv: info.mv.vid || null,
+    source_type: 'qq'
   };
   if (song_data.album.mid) {
     song_data['song_img_url'] = `https://y.gtimg.cn/music/photo_new/T002R300x300M000${song_data.album.mid}.jpg`;
@@ -158,7 +159,8 @@ export const get_song_info_in_list = (info: any): SongItem => {
       320: Boolean(info.size320),
       999: Boolean(info.sizeflac)
     },
-    mv: info.vid || null
+    mv: info.vid || null,
+    source_type: 'qq'
   };
   if (song_data.album.mid) {
     song_data['song_img_url'] = `https://y.gtimg.cn/music/photo_new/T002R300x300M000${song_data.album.mid}.jpg`;

@@ -55,7 +55,8 @@ export const get_song_info = (info: any): SongItem => {
       320: info.privilege.maxbr >= 320000,
       999: info.privilege.maxbr >= 999000
     },
-    mv: info.mv || null
+    mv: info.mv || null,
+    source_type: 'netease'
   }
   return song_data as SongItem;
 }
@@ -86,7 +87,8 @@ export const get_song_info_in_list = (info: any): SongItem => {
       320: info.h?.br >= 320000,
       999: info.sq?.br >= 999000
     },
-    mv: info.mvid || null
+    mv: info.mvid || null,
+    source_type: 'netease'
   }
   return song_data as SongItem;
 }
