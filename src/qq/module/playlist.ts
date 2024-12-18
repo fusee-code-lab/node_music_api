@@ -1,6 +1,6 @@
 import { get_req_form, get_song_info_in_list, net } from "../protocol";
 
-export const song_list = async (
+export const playlist_detail = async (
   diss_id: string
 ) => {
   const form = get_req_form('getPlaylist') as any;

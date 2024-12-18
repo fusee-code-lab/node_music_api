@@ -7,20 +7,20 @@ const { qq, netease } = require('./dist/index.js')
 //   })
 // 2611153424
 
-netease.song_url([2611153424, 1445247636])
-  .then(result => {
-    console.log(result);
-  })
+// netease.song_url([2611153424, 1445247636])
+//   .then(result => {
+//     console.log(result);
+//   })
 
 // netease.search('Shadowbringers', 1, 1, 1)
 //   .then(result => {
 //     console.log(result);
 //   })
 
-// qq.song_list(7452914334)
-//   .then(res => {
-//     console.log(res);
-//   })
+netease.playlist_song_list(893420432)
+  .then(res => {
+    console.log(res);
+  })
 
 // 003V3v3l1tqUbx
 
